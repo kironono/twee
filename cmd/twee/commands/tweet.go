@@ -20,11 +20,16 @@ var tweetCmd = &cobra.Command{
 }
 
 func tweetCommandF(command *cobra.Command, args []string) error {
-	fc := config.NewFileConfig(getConfigPath(command))
-	conf, err := fc.Load()
-
+	path, err := getConfigPath(command)
 	if err != nil {
-		return fmt.Errorf("failed to load configuration\n%v\n", err)
+		return fmt.Errorf("failed to load configuration\n%w\n", err)
+	}
+
+	fc := config.NewFileConfig(path)
+
+	conf, err := fc.Load()
+	if err != nil {
+		return fmt.Errorf("failed to load configuration\n%w\n", err)
 	}
 
 	return twitter.SendTweet(conf)
