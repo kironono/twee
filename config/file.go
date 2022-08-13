@@ -22,7 +22,7 @@ func NewFileConfig(path string) *FileConfig {
 func (fc *FileConfig) Load() (*model.Config, error) {
 	f, err := os.Open(fc.path)
 	if err != nil {
-		return nil, fmt.Errorf("failed to open %s for reading", fc.path)
+		return nil, fmt.Errorf("failed to open %s for reading: %w", fc.path, err)
 	}
 	defer f.Close()
 

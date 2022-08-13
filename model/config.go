@@ -1,8 +1,10 @@
 package model
 
 type TwitterSettings struct {
-	ConsumerKey    string `yaml:"consumer_key"`
-	ConsumerSecret string `yaml:"consumer_secret"`
+	ApiKey       string `yaml:"api_key"`
+	ApiSecret    string `yaml:"api_secret"`
+	AccessToken  string `yaml:"access_token"`
+	AccessSecret string `yaml:"access_secret"`
 }
 
 type Config struct {

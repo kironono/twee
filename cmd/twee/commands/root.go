@@ -5,16 +5,34 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/kironono/twee/config"
+	"github.com/kironono/twee/model"
 	"github.com/spf13/cobra"
 )
 
 var rootCmd = &cobra.Command{
 	Use:   "twee",
-	Short: "tweet",
+	Short: "Simple tweet application",
 }
 
 func init() {
 	rootCmd.PersistentFlags().StringP("config", "c", "", "Configuration file to use.")
+}
+
+func loadConfig(command *cobra.Command) (*model.Config, error) {
+	path, err := getConfigPath(command)
+	if err != nil {
+		return nil, fmt.Errorf("failed to load configuration\n%w\n", err)
+	}
+
+	fc := config.NewFileConfig(path)
+
+	conf, err := fc.Load()
+	if err != nil {
+		return nil, fmt.Errorf("failed to load configuration\n%w\n", err)
+	}
+
+	return conf, nil
 }
 
 func getConfigPath(command *cobra.Command) (string, error) {
